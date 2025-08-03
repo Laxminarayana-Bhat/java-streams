@@ -17,6 +17,6 @@ public class JavaStreamsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Streams.doOperations();
+//        Streams.doOperations();
     }
 }

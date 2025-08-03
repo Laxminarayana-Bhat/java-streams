@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.*;
 
 @UtilityClass
-public class Streams {
+public class StreamsHelper {
 
     Opera m = Integer::sum;
 
