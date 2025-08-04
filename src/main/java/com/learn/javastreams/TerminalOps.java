@@ -59,6 +59,14 @@ public class TerminalOps {
         System.out.println(" after terminal op");
         System.out.println(lazy);
 
+        Stream<Integer> integerStream=Stream.of(3,6,65,98,454);
+        integerStream.forEach(System.out::println);//consumed
+//        System.out.println(integerStream.map(x->x*x).toList());//exception as already consumed
+
+        //for each ordered
+        list=List.of(1,2,4,5,7,8,9,54,346,5345);
+        list.parallelStream().forEach(System.out::println);//random ordered print
+//        list.parallelStream().forEachOrdered(System.out::println);//ordered print
 
     }
 }

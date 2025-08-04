@@ -17,6 +17,17 @@ public class JavaStreamsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        Streams.doOperations();
+        String sentence = "abc def abcd";
+        Map<String, Long> stringIntegerMap = Arrays.stream(sentence.split(" ")).collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
+        List<String> stringList = List.of("hello", "hi");
+        //key as string, val as len
+        Map<String, Integer> map = stringList.stream().collect(Collectors.toMap(x -> x, String::length));
+        //same with merging function in map
+        stringList = List.of("hi", "hi");
+        map = stringList.stream().collect(Collectors.toMap(key -> key, val -> 1, (x, y) -> x + y));//if we dont write this map will thr duplicate key exception
+//        map = stringList.stream().collect(Collectors.toMap(key -> key, val -> 1, Integer::sum));
+
     }
+
 }

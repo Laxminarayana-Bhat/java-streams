@@ -16,6 +16,11 @@ public class ParallelStream {
         longList = integerList.parallelStream().map(ParallelStream::fact).toList();
         after = System.currentTimeMillis();
         System.out.println("parallel streams: " + (after - before) + "ms");
+
+
+        //be careful while using parallel streams as for the cases where one element depends on the result of another element, it will generate random values
+        //if use atomic vars, than also its random or use normal streams in that case, ex: for sum of elements till that
+
     }
 
     public static long fact(int n) {
