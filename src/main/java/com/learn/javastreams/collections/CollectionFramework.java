@@ -133,6 +133,13 @@ public class CollectionFramework {
         //Raw collections are non-generic collections that lack type safety and can cause runtime errors.
         //Homogeneous vs Heterogeneous:List<Integer> vs List<Object>
         //Homogeneous collections store a single type and are type-safe, while heterogeneous collections store multiple types and are not type-safe.
+
+        //internal design
+        //Node[] table   ← array (buckets)
+        //  |
+        //  ├─ index 0 → null
+        //  ├─ index 1 → Node(key,value) → Node → Node   (LinkedList)
+        //  ├─ index 2 → TreeNode(...)                   (Tree)
     }
 
     static class MyEnum {
