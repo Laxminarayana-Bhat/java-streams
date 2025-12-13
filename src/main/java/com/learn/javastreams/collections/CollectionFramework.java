@@ -33,13 +33,19 @@ public class CollectionFramework {
         //list.add(3);          // modification
         //it.next();            // Exception here
 
+        //Iterator = read + remove only
+        //add() needs position + ordering
+        //That’s why it exists in "ListIterator", not Iterator
         // For fail safe iteration use concurrent / copy on arraylist etc.
 
         int[] arr=new int[10];
         List<Integer> list5 = List.of(arr[0]);//immutable
         List<Integer> list6 = new ArrayList<>(Arrays.asList(arr[0]));//mutable
 
-
+        List<String> original = new ArrayList<>(List.of("A", "B"));
+        List<String> unmodifiableList = Collections.unmodifiableList(original);
+        // This line throws UnsupportedOperationException - modifying immutable list
+         unmodifiableList.add("C");
 
 //------------ Copy-On-Write Strategy ------------
 //When a write operation happens (add, set, remove):
@@ -115,7 +121,7 @@ public class CollectionFramework {
 
         Map<Integer, String> m1 = new HashMap<>();                   // fast, hashing based, not thread-safe
         Map<Integer, String> m2 = new LinkedHashMap<>(10,0.8f,true);    //lru  // maintains insertion order
-        Map<Integer, String> m3 = new TreeMap<>();                   // sorted (Red-Black tree), no null keys
+        Map<Integer, String> m3 = new TreeMap<>();                   // sorted (Red-Black tree), no null keys can have null values
         Map<Integer, String> m4 = new Hashtable<>();                 // thread-safe, legacy
         Map<Integer, String> m5 = new ConcurrentHashMap<>();         // thread-safe, high-performance hashing
         Map<Integer, String> m6 = new ConcurrentSkipListMap<>();     // thread-safe, sorted map
@@ -140,6 +146,19 @@ public class CollectionFramework {
         //  ├─ index 0 → null
         //  ├─ index 1 → Node(key,value) → Node → Node   (LinkedList)
         //  ├─ index 2 → TreeNode(...)                   (Tree)
+        class Node<K,V> {
+            int hash;
+            K key;
+            V value;
+            Node<K,V> next;
+        }
+
+        //Why String is immutable
+        //1. Keys in HashMap/HashSet – hashCode must stay constant (e.g., map.put("key",1))
+        //2. String pool / memory sharing – literals can be shared safely (e.g., String s1="hello"; String s2="hello")
+        //3. Security – prevent modification of sensitive data (e.g., String url="jdbc:mysql://localhost/db")
+        //4. Thread safety – safe across threads (e.g., String msg="hello")
+        //5. Predictable / simpler behavior – original string never changes (e.g., s="abc"; s.concat("d"))
     }
 
     static class MyEnum {
