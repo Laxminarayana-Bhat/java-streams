@@ -125,7 +125,7 @@ public class CollectionFramework {
         Map<Integer, String> m4 = new Hashtable<>();                 // thread-safe, legacy
         Map<Integer, String> m5 = new ConcurrentHashMap<>();         // thread-safe, high-performance hashing
         Map<Integer, String> m6 = new ConcurrentSkipListMap<>();     // thread-safe, sorted map
-        Map<Integer, String> m7 = new WeakHashMap<>();               // keys eligible for GC (weak references)
+        Map<Integer, String> m7 = new WeakHashMap<>();               // keys eligible for GC (weak references), ex: if Object is key and has some value, if object is set to null it will be removed here
         Map<Integer, String> m8 = new IdentityHashMap<>();           // key comparison using == instead of equals()
         Map<Integer, String> m9 = new EnumMap<>(MyEnum.class);       // fast map for enum keys
 //!!! map is separate interface, as its having k,v pairs. rest of the collection framework work values are single valued
@@ -152,6 +152,7 @@ public class CollectionFramework {
             V value;
             Node<K,V> next;
         }
+        list2.removeIf(a->a%3==0);//takes predicate
 
         //Why String is immutable
         //1. Keys in HashMap/HashSet – hashCode must stay constant (e.g., map.put("key",1))
@@ -187,5 +188,24 @@ public class CollectionFramework {
         }
         //Without @Override → no error, method just becomes a new method.
 
+
+
+        //Standard collections → fast, not thread-safe
+        //
+        //ConcurrentHashMap → fine-grained locking, high concurrency
+        //
+        //Blocking collections → thread coordination (producer–consumer)
+        //
+        //WeakHashMap → GC-friendly, memory-sensitive
+        //
+        //IdentityHashMap → == instead of equals()
+        //
+        //Synchronized wrappers → iteration needs manual locking
+
+
+        //| Concept      | Real-world analogy                                      |
+        //| ------------ | ------------------------------------------------------- |
+        //| Serializable | Saving a game and loading later                         |
+        //| WeakHashMap  | Sticky note on a file that disappears when file is gone |
     }
 }
