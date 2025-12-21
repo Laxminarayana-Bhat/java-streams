@@ -6,8 +6,6 @@ public class Test {
     public static void main(String[] args) {
         int[] input = new int[]{100, 4, 500, 1, 20, 3, 2};
         int n = input.length;
-        Set<Integer> set = new HashSet<>();
-        int[] sorted = new int[n];
         for (int i = 0; i < n-1; i++) {
             for (int j = 0; j < n-1; j++) {
                 if(input[j+1]<input[j]) {
@@ -59,6 +57,9 @@ public class Test {
         Collections.sort(list, Collections.reverseOrder());
         Map<Integer,Integer> amountCountMap=new HashMap<>(Map.of(1000,10,500,5,100,10));
 
+        Thread t=new Thread(()->{
+            System.out.println(list.size());
+        });
         int inputAmt=2600;
         int minNotes=0;
         for(Integer amt:list){
