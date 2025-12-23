@@ -2,8 +2,12 @@ package com.learn.javastreams;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class StreamsHelper {
@@ -26,6 +30,7 @@ public class StreamsHelper {
 
     //Function --> do work for you, functional interface
     Function<String, String> str = s -> s.substring(0, 3);
+    // Function<T, R>: Can take an input of type T and return a result of a different type R. For example, taking a String and returning its length as an Integer.
     Function<Integer, Integer> i = Function.identity();
     //map(...)
     //flatMap(...)
@@ -84,6 +89,12 @@ public class StreamsHelper {
 
         list.forEach((x)-> System.out.println(x));//without method reference
         list.forEach(System.out::println);//with method reference
+        Stream<Integer> integerStream= Stream.of(1,2,22);
+        integerStream.forEach(System.out::println);
+//        Collectors.joining(",");
+//        integerStream.forEach(System.out::println);//Exception in thread "main" java.lang.IllegalStateException: stream has already been operated upon or closed
+        List<List<Integer>> list=new ArrayList<>();
+        List<Integer> list1 = list.stream().flatMap(Collection::stream).toList();//flatmap
     }
 
 

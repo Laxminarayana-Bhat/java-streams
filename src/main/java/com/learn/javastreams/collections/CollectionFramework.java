@@ -19,12 +19,12 @@ public class CollectionFramework {
         List<Integer> list3 = new Stack<>();                   // thread-safe LIFO stack (legacy, extends Vector)
         List<Integer> list4 = new CopyOnWriteArrayList<>();    // thread-safe, best for read-heavy operations
         ListIterator<Integer> integerListIterator = list.listIterator();
-        if (integerListIterator.hasNext()){
+        if (integerListIterator.hasNext()) {
             System.out.println(integerListIterator.next());
         }
         Serializable serializable = integerListIterator.hasNext() ? integerListIterator.next() : 0;
 
-        Iterator<Integer> iterator=list1.iterator();
+        Iterator<Integer> iterator = list1.iterator();
         int i = iterator.hasNext() ? iterator.next() : 0;
         //Iterator can only move forward and remove elements.
         //ListIterator can move forward & backward and can add, set, remove elements.
@@ -38,14 +38,14 @@ public class CollectionFramework {
         //That’s why it exists in "ListIterator", not Iterator
         // For fail safe iteration use concurrent / copy on arraylist etc.
 
-        int[] arr=new int[10];
+        int[] arr = new int[10];
         List<Integer> list5 = List.of(arr[0]);//immutable
         List<Integer> list6 = new ArrayList<>(Arrays.asList(arr[0]));//mutable
 
         List<String> original = new ArrayList<>(List.of("A", "B"));
         List<String> unmodifiableList = Collections.unmodifiableList(original);
         // This line throws UnsupportedOperationException - modifying immutable list
-         unmodifiableList.add("C");
+        unmodifiableList.add("C");
 
 //------------ Copy-On-Write Strategy ------------
 //When a write operation happens (add, set, remove):
@@ -70,11 +70,9 @@ public class CollectionFramework {
         //Null in Set: Depends on implementation, trees doesn't allow null, hashset allows one
 
         Set<MyEnum> set = new HashSet<>();
-        set.add(new MyEnum(1));
-        set.add(new MyEnum(1));   // added again! thats why we need !!!! overriding of hashcode
+//        set.add(new MyEnum(1));
+//        set.add(new MyEnum(1));   // added again! thats why we need !!!! overriding of hashcode
 //refer below custom class
-
-
 
 
         // ----- Queue Implementations -----
@@ -110,7 +108,6 @@ public class CollectionFramework {
 //int count;      // number of elements
 
 
-
         // ----- Deque Implementations -----
 
         Deque<Integer> d1 = new ArrayDeque<>();               // fastest deque, stack+queue
@@ -120,14 +117,14 @@ public class CollectionFramework {
         // ----- Map Implementations -----
 
         Map<Integer, String> m1 = new HashMap<>();                   // fast, hashing based, not thread-safe
-        Map<Integer, String> m2 = new LinkedHashMap<>(10,0.8f,true);    //lru  // maintains insertion order
+        Map<Integer, String> m2 = new LinkedHashMap<>(10, 0.8f, true);    //lru  // maintains insertion order
         Map<Integer, String> m3 = new TreeMap<>();                   // sorted (Red-Black tree), no null keys can have null values
         Map<Integer, String> m4 = new Hashtable<>();                 // thread-safe, legacy
         Map<Integer, String> m5 = new ConcurrentHashMap<>();         // thread-safe, high-performance hashing
         Map<Integer, String> m6 = new ConcurrentSkipListMap<>();     // thread-safe, sorted map
         Map<Integer, String> m7 = new WeakHashMap<>();               // keys eligible for GC (weak references), ex: if Object is key and has some value, if object is set to null it will be removed here
         Map<Integer, String> m8 = new IdentityHashMap<>();           // key comparison using == instead of equals()
-        Map<Integer, String> m9 = new EnumMap<>(MyEnum.class);       // fast map for enum keys
+//        Map<Integer, String> m9 = new EnumMap<>(MyEnum.class);       // fast map for enum keys
 //!!! map is separate interface, as its having k,v pairs. rest of the collection framework work values are single valued
         //those methods like .keyset, .values would not fit the collections framework, soo
 
@@ -146,13 +143,13 @@ public class CollectionFramework {
         //  ├─ index 0 → null
         //  ├─ index 1 → Node(key,value) → Node → Node   (LinkedList)
         //  ├─ index 2 → TreeNode(...)                   (Tree)
-        class Node<K,V> {
+        class Node<K, V> {
             int hash;
             K key;
             V value;
-            Node<K,V> next;
+            Node<K, V> next;
         }
-        list2.removeIf(a->a%3==0);//takes predicate
+        list2.removeIf(a -> a % 3 == 0);//takes predicate
 
         //Why String is immutable
         //1. Keys in HashMap/HashSet – hashCode must stay constant (e.g., map.put("key",1))
@@ -164,13 +161,14 @@ public class CollectionFramework {
 
     static class MyEnum {
         Integer id;
-        MyEnum(Integer ele){
-            this.id=ele;
+
+        MyEnum(Integer ele) {
+            this.id = ele;
         }
 
         @Override
         public boolean equals(Object o) {
-            return ((MyEnum)o).id == this.id;
+            return ((MyEnum) o).id == this.id;
         }//makes sure uniqness
 
         @Override
@@ -178,16 +176,16 @@ public class CollectionFramework {
             return id;
         }
 
-        class Child extends MyEnum {
-            Child(Integer ele) {
-                super(ele);
-            }
-
-//            @Override    here we get compile time error as method doesnt exist but we want to override
-            void shoow() {}   // ❌ compile-time error
-        }
+//        class Child extends MyEnum {
+//            Child(Integer ele) {
+//                super(ele);
+//            }
+//
+//            //            @Override    here we get compile time error as method doesnt exist but we want to override
+//            void shoow() {
+//            }   // ❌ compile-time error
+//        }
         //Without @Override → no error, method just becomes a new method.
-
 
 
         //Standard collections → fast, not thread-safe

@@ -1,6 +1,7 @@
 package com.learn.javastreams;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Test {
     public static void main(String[] args) {
@@ -75,6 +76,9 @@ public class Test {
         }
         System.out.println(minNotes);
 
+        Stream<Integer> integerStream= Stream.of(1,2,22);
+        integerStream.forEach(System.out::println);
+        integerStream.forEach(System.out::println);//Exception in thread "main" java.lang.IllegalStateException: stream has already been operated upon or closed
 
 
 
